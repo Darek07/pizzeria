@@ -1,0 +1,144 @@
+.header {
+    background: url('/assets/images/back3.jpg') no-repeat center top / cover;
+    background-size: cover;
+    height: 100vh;
+}
+
+header a {
+    color: #f8f8ff;
+    font-style: normal;
+}
+
+.logo {
+    margin-right: 400px;
+    margin-left: 20px;
+}
+
+.inst {
+    margin-left: 300px;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+}
+
+.menu li {
+    margin-right: 40px;
+}
+
+.tel {
+    font-size: 17px;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.offer {
+    font-style: normal;
+    margin-left: 50px;
+    color: #f8f8ff;
+    text-transform: uppercase;
+	margin-top: 216px;
+    text-decoration: none;
+}
+
+.offer p {
+	font-size: 25px;
+	letter-spacing: 0.1em;
+}
+
+.offer h1 {
+	font-size: 70px;
+	margin-bottom: 19px;
+	margin-top: -9px;
+	letter-spacing: 0.02em
+}
+
+.btn {
+	display: block;
+	font-size: 17px;
+	text-align: center;
+	letter-spacing: 0.1em;
+	padding: 17px 47px;
+	border: 1px solid #fff;
+	width: 238px;
+	transition: all 0.5s ease;
+}
+
+.btn:hover {
+	background: #fff;
+    color: #000;
+}
+
+.godziny{
+    display: flex;
+}
+
+.godziny h3{
+    text-align: center;
+    margin-left: 400px;
+    margin-top: 300px;
+    color: grey;
+    font-size: 20px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.godziny p{
+    margin-top: 330px;
+    margin-left: -205px;
+    font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	text-align: center;
+	line-height: 1.5em;
+}
+
+.adres{
+    display: flex;
+}
+
+.adres h3{
+    text-align: center;
+    margin-left: 850px;
+    margin-top: -90px;
+    color: grey;
+    font-size: 20px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.adres p{
+    margin-top: -63px;
+    margin-left: -195px;
+    font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	text-align: center;
+	line-height: 1.5em;
+    font-family: cursive;
+}
+
+.footer-text {
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	display: flex;
+    margin-top: 50px;
+	padding: 30px;
+}
+
+.footer-text p {
+	margin-right: 67px;
+}

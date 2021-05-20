@@ -1,0 +1,46 @@
+h3, li, p {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 30px;
+	font-style: normal;
+	font-weight: 600;
+	text-align: justify;
+	line-height: 1.5em;
+}
+
+ul li {
+    list-style-type: none;
+}
+/* 
+ul {
+    margin-left: 0;
+    padding-left: 0;
+} */
+
+.description {
+	display: flex;
+	justify-content: space-between;
+    margin-top: 100px;
+}
+
+.description img {
+    margin-left: 40px;
+}
+
+.info {
+    float:right;
+    margin-right: 40px;
+}
+
+.description li, p {
+    font-size: 18px;
+    font-weight: 550;
+}
+
+.desc-left-right {
+	width: 600px;
+}
+
+img {
+    width: 50%;
+    object-fit: cover;
+}

@@ -1,0 +1,17 @@
+<div class="container">
+    <h2>Wybierz pizzę</h2>
+    <!-- two pizzas in one line -->
+    <div *ngFor="let count of isAll()" class="description">
+        <div *ngFor="let pizza of getPizza()" class="desc-left-right">
+            <img src={{pizza.photo}} alt="{{pizza.name}}">
+            <div class="info">
+                <h3>{{pizza.name}}</h3>
+                <p>Składniki:<br></p>
+                <ul>
+                    <li *ngFor="let ingr of pizza.ingredients">{{ingr}}, </li>
+                </ul>
+                <p>Cena: {{pizza.price}}</p>
+            </div>
+        </div>
+    </div>
+</div>
