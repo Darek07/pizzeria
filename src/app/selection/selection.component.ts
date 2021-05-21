@@ -79,13 +79,13 @@ export class SelectionComponent implements OnInit {
 }
 
 interface Pizza {
-  dough:Item[];
-  sauce:Item[];
-  ingredients:Item[];
+  readonly dough:Item[];
+  readonly sauce:Item[];
+  readonly ingredients:Item[];
 }
 
 interface Item {
-  item: string;
-  photo: string;
-  price:number;
+  readonly item: string;
+  readonly photo: string;
+  readonly price:number;
 }

@@ -1,9 +1,9 @@
-<div *ngIf=!opt class="container">
+<div *ngIf=opt class="container">
     <a (click)="changeOpt()" class="btn">Stwórz swoją własną pizzę</a>
     <app-menu></app-menu>
 </div>
 
-<div  *ngIf=opt class="container">
+<div *ngIf=!opt class="container">
     <a (click)="changeOpt()" class="btn">Wybierz z menu</a>
     <h2>Stwórz swoją własną pizzę</h2>
     <div>

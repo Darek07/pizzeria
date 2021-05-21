@@ -98,8 +98,8 @@ export class MenuComponent implements OnInit {
 }
 
 interface Pizza {
-  name:string;
-  ingredients:string[];
-  price:number;
-  photo:string;
+  readonly name:string;
+  readonly ingredients:string[];
+  readonly price:number;
+  readonly photo:string;
 }

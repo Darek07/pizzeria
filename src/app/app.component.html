@@ -30,8 +30,14 @@
     <div class="container">
         <div class="offer">
             <p>To nie jest tylko pizza. To jest sztuka</p><br>
-            <h1>Pizzeria PŁ</h1>
-            <a routerLink="/menu" class="btn">Przejdź do menu</a>
+            <div *ngIf="url==='/pizzeria'">
+                <h1>Pizzeria PŁ</h1>
+                <a routerLink="/menu" class="btn">Przejdź do menu</a>
+            </div>
+            <div *ngIf="url==='/menu'">
+                <h1>Menu</h1>
+                <a routerLink="/pizzeria" class="btn">Przejdź do strony głównej</a>
+            </div>
         </div>
     </div>
 </header>
