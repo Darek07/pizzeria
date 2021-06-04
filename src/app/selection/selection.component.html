@@ -1,43 +1,54 @@
-<div *ngIf=opt class="container">
+<div *ngIf=!opt class="container">
     <a (click)="changeOpt()" class="btn">Stwórz swoją własną pizzę</a>
     <app-menu></app-menu>
 </div>
 
-<div *ngIf=!opt class="container">
-    <a (click)="changeOpt()" class="btn">Wybierz z menu</a>
+<div *ngIf=opt class="container">
     <h2>Stwórz swoją własną pizzę</h2>
-    <div>
-        <h3>Wybierz ciasto: </h3>
-        <ul>
-            <!-- generating three items in one line -->
-            <ul *ngFor="let four of getItemsFours('dough')" class="description">
-                <li *ngFor="let dough of four"> 
-                    <img src={{dough.photo}} alt="{{dough.item}}">
-                    <p>{{dough.item}}</p>
-                </li>
-            </ul>
-        </ul>
-    </div>
-    <div>
-        <h3>Wybierz sos: </h3>
-        <ul>
-            <ul *ngFor="let four of getItemsFours('sauce')" class="description">
-                <li *ngFor="let sauce of four"> 
-                    <img src={{sauce.photo}} alt="{{sauce.item}}">
-                    <p>{{sauce.item}}</p>
-                </li>
-            </ul>
-        </ul>
-    </div>
-    <div>
-        <h3>Wybierz składniki: </h3>
-        <ul>
-            <ul *ngFor="let four of getItemsFours('ingredients'); let i = index" class="description">
-                <li *ngFor="let ingr of four"> 
-                    <img src={{ingr.photo}} alt="{{ingr.item}}">
-                    <p>{{ingr.item}}</p>
-                </li>
-            </ul>
-        </ul>
-    </div>
+    <form [formGroup]="selectedPizza" (ngSubmit)="onSubmit(selectedPizza)">
+        <div *ngFor="let row of getRows('dough')">
+            <div><h3 [ngStyle]="{'visibility': row===0 ? 'visible' : 'hidden'}">Wybierz ciasto: </h3></div>
+            <div class="description">
+                <div *ngFor="let dough of getItemsFours('dough', row)">
+                    <input type="radio" value="{{dough.item}}" formControlName="selectedDough" (ngModelChange)="doughChange($event)" id="{{dough.item}}">
+                    <label for="{{dough.item}}">
+                        <img src={{dough.photo}} alt="{{dough.item}}">
+                        <p>{{dough.item}}</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let row of getRows('sauce')">
+            <div><h3 [ngStyle]="{'visibility': row===0 ? 'visible' : 'hidden'}">Wybierz sos: </h3></div>
+            <div class="description">
+                <div *ngFor="let sauce of getItemsFours('sauce', row)">
+                    <input type="radio" value="{{sauce.item}}" formControlName="selectedSauce" (ngModelChange)="doughChange($event)" id="{{sauce.item}}">
+                    <label for="{{sauce.item}}">
+                        <img src={{sauce.photo}} alt="{{sauce.item}}">
+                        <p>{{sauce.item}}</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let row of getRows('ingredients')">
+            <div><h3 [ngStyle]="{'visibility': row===0 ? 'visible' : 'hidden'}">Wybierz składniki: </h3></div>
+            <div class="description">
+                <div *ngFor="let ingredients of getItemsFours('ingredients', row)">
+                    <input type="checkbox" value="{{ingredients.item}}" (change)="ingrChange($event)" id="{{ingredients.item}}">
+                    <label for="{{ingredients.item}}">
+                        <img src={{ingredients.photo}} alt="{{ingredients.item}}">
+                        <p>{{ingredients.item}}</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="result" style="margin-top: 100px"> <!-- style można usunąć-->
+            <h3>Wynik: </h3>  
+            <p *ngFor="let i of selected">{{i.item}}: {{i.price}}</p>
+        </div>
+
+        <button type="submit" class="btn">Złóż zamówienie</button>
+    </form>
+    
 </div>

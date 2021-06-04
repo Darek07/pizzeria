@@ -1,5 +1,5 @@
-import { isNgTemplate } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-selection',
@@ -10,8 +10,11 @@ export class SelectionComponent implements OnInit {
 
   private selection:Pizza;
   opt:boolean = true;
+  selectedPizza: FormGroup;
+  selectedIngredient: boolean;
+  result: boolean;
 
-  constructor() {
+  constructor(private formBuild: FormBuilder) {
     this.selection = {
       dough: [ 
         { item: "Cienkie", photo: 'assets/images/skladniki/ciasto.gif', price: 0.50 }, 
@@ -33,14 +36,47 @@ export class SelectionComponent implements OnInit {
         { item: "Pomidory", photo: 'assets/images/skladniki/pomidory.gif', price: 7.70 },
         { item: "Rukola", photo: 'assets/images/skladniki/rukola.gif', price: 7.70 },
         { item: "Salami", photo: 'assets/images/skladniki/salami.gif', price: 7.70 },
-        { item: "Ser", photo: 'assets/images/skladniki/ser.gif', price: 7.70 }, ]
+        { item: "Ser", photo: 'assets/images/skladniki/ser.gif', price: 7.70 } ]
     }
   }
 
   ngOnInit(): void {
+    this.selectedPizza = this.formBuild.group({
+      selectedDough: '',
+      selectedSauce: '',
+      selectedIngredients: this.formBuild.array([])
+    });
   }
 
-  getItemsFours(comp:string) {
+  onSubmit(selected: FormGroup) {
+    console.log("Submit");
+    // TODO
+  }
+
+  doughChange(dough: string) {
+    this.result = true;
+  }
+
+  ingrChange(event: any) {
+    this.result = true;
+    const formIngr: FormArray = this.selectedPizza.get('selectedIngredients') as FormArray;
+    
+    if (event.target.checked) {
+      formIngr.push(new FormControl(event.target.value));
+    }
+    else {
+      let i: number = 0;
+
+      formIngr.controls.forEach((ctrl: FormControl) => {
+        if (ctrl.value == event.target.value) {
+          formIngr.removeAt(i);
+          return;
+        }
+      })
+    }
+  }
+
+  getItemsFours(comp:string, index: number) {
     let arr = [];
     let fours = [];
     let select = [];
@@ -70,11 +106,86 @@ export class SelectionComponent implements OnInit {
       arr.push(fours);
     }
 
-    return arr;
+    return arr[index];
+  }
+  getRows(comp: string){
+    let length:number;
+    let array = [];
+
+    switch (comp) {
+      case 'dough':
+        length = this.selection.dough.length;
+        break;
+      case 'sauce':
+        length = this.selection.sauce.length;
+        break;
+      case 'ingredients':
+        length = this.selection.ingredients.length;
+        break;
+      default:
+        return [];
+    }
+
+    length = ((length - length % 3) / 3) + (length % 3 === 0 ? 0 : 1);
+
+    for (let i = 0; i < length; i++) {
+      array.push(i);
+    }
+
+    return array;
+  }
+
+  getLen(arr: any) {
+    return arr.length;
   }
 
   changeOpt() {
     this.opt = !this.opt;
+  }
+
+  get selected() {
+    var sel = [];
+
+    if (this.selectedPizza.get('selectedDough').value !== '') {
+      sel.push({
+        item: this.selectedPizza.get('selectedDough').value,
+        price: 0
+      });
+      this.selection.dough.forEach((d: any) => {
+        if (d.item == this.selectedPizza.get('selectedDough').value) {
+          sel[sel.length - 1].price = d.price;
+        }
+      });
+    }
+
+    if (this.selectedPizza.get('selectedSauce').value !== '') {
+      sel.push({
+        item: this.selectedPizza.get('selectedSauce').value,
+        price: 0
+      });
+      this.selection.sauce.forEach((d: any) => {
+        if (d.item == this.selectedPizza.get('selectedSauce').value) {
+          sel[sel.length - 1].price = d.price;
+        }
+      });
+    }
+
+    const formIngr: FormArray = this.selectedPizza.get('selectedIngredients') as FormArray;
+
+    formIngr.controls.forEach((ctrl: FormControl) => {
+      sel.push({
+        item: ctrl.value,
+        price: 0
+      })
+
+      this.selection.ingredients.forEach((d: any) => {
+        if (d.item == ctrl.value) {
+          sel[sel.length - 1].price = d.price;
+        }
+      });
+    })
+
+    return sel;
   }
 }
 

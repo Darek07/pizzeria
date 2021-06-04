@@ -17,6 +17,10 @@ h3 {
     justify-content: start;
 }
 
+form h3 {
+    width: 22%;
+}
+
 .description {
 	display: flex;
 	justify-content: space-around;
@@ -36,6 +40,7 @@ h3 {
 img {
     height: 300px;
     width: 300px;
+    border-radius: 50%;
 }
 
 
@@ -57,7 +62,23 @@ img {
     color: #fff;
 }
 
-/* img {
-    width: 50%;
-    object-fit: cover;
-} */
+input {
+    visibility: hidden;
+}
+
+label {
+    cursor: pointer;
+    display: inline-block;
+}
+  
+input:checked + label img {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+	transform: scale(1.1);
+    padding: 2px;
+    border: 2px solid red;
+}
+
+input:checked + label p {
+    margin-top: 10%;
+	transform: scale(1.3);
+}
