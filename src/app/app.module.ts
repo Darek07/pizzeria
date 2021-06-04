@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { PizzeriaComponent } from './pizzeria/pizzeria.component';
 import { MenuComponent } from './menu/menu.component';
 import { SelectionComponent } from './selection/selection.component';
+import { KoszComponent } from './kosz/kosz.component';
+import {  ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     PizzeriaComponent,
     MenuComponent,
-    SelectionComponent
+    SelectionComponent,
+    KoszComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
