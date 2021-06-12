@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { KoszComponent } from '../kosz/kosz.component';
 
 @Component({
   selector: 'app-selection',
@@ -13,16 +15,17 @@ export class SelectionComponent implements OnInit {
   selectedPizza: FormGroup;
   selectedIngredient: boolean;
   result: boolean;
+  @ViewChild('panel') public panel:ElementRef;
 
-  constructor(private formBuild: FormBuilder) {
+  constructor(private formBuild: FormBuilder, public dialog: MatDialog) {
     this.selection = {
       dough: [ 
-        { item: "Cienkie", photo: 'assets/images/skladniki/ciasto.gif', price: 0.50 }, 
+        { item: "Cienkie", photo: 'assets/images/skladniki/ciasto2.gif', price: 0.50 }, 
         { item: "Grube", photo: 'assets/images/skladniki/ciasto.gif', price: 0.50 } ],
       sauce: [ 
         { item: "Pomidorowy", photo: 'assets/images/skladniki/sos_pom.gif', price: 0.20 }, 
-        { item: "Czosnkowy", photo: 'assets/images/circle.png', price: 0.20 }, 
-        { item: "Bez", photo: 'assets/images/circle.png', price: 0.00 } ],
+        { item: "Czosnkowy", photo: 'assets/images/skladniki/sos_czosnkowy.gif', price: 0.20 }, 
+        { item: "Barbecue", photo: 'assets/images/skladniki/sos_barbecue.gif', price: 0.00 } ],
       ingredients: [ 
         { item: "Ananas", photo: 'assets/images/skladniki/ananas.gif', price: 2.00 }, 
         { item: "Bazylia", photo: 'assets/images/skladniki/bazylia.gif', price: 2.50 },
@@ -48,9 +51,42 @@ export class SelectionComponent implements OnInit {
     });
   }
 
-  onSubmit(selected: FormGroup) {
-    console.log("Submit");
-    // TODO
+  onSubmit() {
+    if (this.dialog.openDialogs.length) return;
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    var costs = 0;
+
+    this.selection.dough.forEach((d: any) => {
+      if (d.item == this.selectedPizza.get('selectedDough').value) {
+        costs += d.price;
+      }
+    });
+
+    this.selection.sauce.forEach((d: any) => {
+      if (d.item == this.selectedPizza.get('selectedSauce').value) {
+        costs += d.price;
+      }
+    });
+
+    const formIngr: FormArray = this.selectedPizza.get('selectedIngredients') as FormArray;
+
+    formIngr.controls.forEach((ctrl: FormControl) => {
+
+      this.selection.ingredients.forEach((d: any) => {
+        if (d.item == ctrl.value) {
+          costs += d.price;
+        }
+      });
+    })
+
+    dialogConfig.data = costs;
+
+    this.dialog.open(KoszComponent, dialogConfig);
   }
 
   doughChange(dough: string) {
@@ -68,10 +104,11 @@ export class SelectionComponent implements OnInit {
       let i: number = 0;
 
       formIngr.controls.forEach((ctrl: FormControl) => {
-        if (ctrl.value == event.target.value) {
+        if (ctrl.value === event.target.value) {
           formIngr.removeAt(i);
           return;
         }
+        i++;
       })
     }
   }
@@ -108,6 +145,7 @@ export class SelectionComponent implements OnInit {
 
     return arr[index];
   }
+  
   getRows(comp: string){
     let length:number;
     let array = [];
@@ -141,6 +179,10 @@ export class SelectionComponent implements OnInit {
 
   changeOpt() {
     this.opt = !this.opt;
+  
+    setTimeout(() => {
+      this.panel.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    });
   }
 
   get selected() {

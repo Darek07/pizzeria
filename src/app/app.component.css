@@ -1,5 +1,6 @@
 .header {
-    background: url('/assets/images/back3.jpg') no-repeat center top / cover;
+    /* url('assets/images/back3.jpg') */
+    background: url('src/assets/images/back3.jpg') no-repeat center top / cover;
     background-size: cover;
     height: 100vh;
 }

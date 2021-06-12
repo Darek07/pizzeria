@@ -1,11 +1,13 @@
-<div *ngIf=!opt class="container">
-    <a (click)="changeOpt()" class="btn">Stwórz swoją własną pizzę</a>
+<div #panel *ngIf=opt class="container">
     <app-menu></app-menu>
+    <div class="button">
+        <a (click)="changeOpt()" class="btn">Stwórz swoją własną pizzę</a>
+    </div>
 </div>
 
-<div *ngIf=opt class="container">
+<div #panel *ngIf=!opt class="container">
     <h2>Stwórz swoją własną pizzę</h2>
-    <form [formGroup]="selectedPizza" (ngSubmit)="onSubmit(selectedPizza)">
+    <form [formGroup]="selectedPizza" (ngSubmit)="onSubmit()">
         <div *ngFor="let row of getRows('dough')">
             <div><h3 [ngStyle]="{'visibility': row===0 ? 'visible' : 'hidden'}">Wybierz ciasto: </h3></div>
             <div class="description">
@@ -43,12 +45,22 @@
             </div>
         </div>
 
-        <div *ngIf="result" style="margin-top: 100px"> <!-- style można usunąć-->
-            <h3>Wynik: </h3>  
-            <p *ngFor="let i of selected">{{i.item}}: {{i.price}}</p>
+        <div *ngIf="result" class="result"> <!-- style można usunąć-->
+            <table>
+                <tr *ngFor="let i of selected; let vis=index">
+                  <td *ngIf="vis === 0" [attr.rowspan]="selected.length"><h3>Wynik: </h3></td>
+                  <td><p>{{i.item}}: {{i.price}}</p></td>
+                </tr>
+            </table>
         </div>
 
-        <button type="submit" class="btn">Złóż zamówienie</button>
+        <div class="button" style="float:left">
+            <button (click)="onSubmit()" type="submit" class="btn" style="float:right; width:334px">Złóż zamówienie</button>
+        </div>
     </form>
+
+    <div class="button">
+        <a (click)="changeOpt()" class="btn">Wybierz pizzę z menu</a>
+    </div>
     
 </div>

@@ -1,4 +1,6 @@
+<h3>Do zapłaty {{ Costs }}</h3>
 
+<mat-dialog-content>
 <div class="row">
   <div class="col-75">
     <div class="container">
@@ -38,7 +40,8 @@
             </div>
           </div>
         </div>
-        <input type="submit" value="Złóż zamówienie" class="btn">
+        <button (click)="close()" class="btn left">Wyjdź</button>
+        <input type="submit" value="Złóż zamówienie" class="btn right">
     </div>
   </div>
-
+</mat-dialog-content>

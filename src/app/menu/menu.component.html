@@ -1,17 +1,25 @@
 <div class="container">
     <h2>Wybierz pizzę</h2>
     <!-- two pizzas in one line -->
-    <div *ngFor="let count of isAll()" class="description">
-        <div *ngFor="let pizza of getPizza()" class="desc-left-right">
-            <img src={{pizza.photo}} alt="{{pizza.name}}">
-            <div class="info">
-                <h3>{{pizza.name}}</h3>
-                <p>Składniki:<br></p>
-                <ul>
-                    <li *ngFor="let ingr of pizza.ingredients">{{ingr}}, </li>
-                </ul>
-                <p>Cena: {{pizza.price}}</p>
+    <form [formGroup]="selectedPizza" (ngSubmit)="onSubmit()">
+        <div *ngFor="let count of isAll()" class="description">
+            <div *ngFor="let pizza of getPizza()" class="desc-left-right">
+                <input type="radio" value="{{pizza.name}}" formControlName="selPizza" (ngModelChange)="selected($event)" id="{{pizza.name}}">
+                <label for="{{pizza.name}}">
+                    <img src={{pizza.photo}} alt="{{pizza.name}}">
+                    <div class="info">
+                        <h3>{{pizza.name}}</h3>
+                        <p>Składniki:<br></p>
+                        <ul>
+                            <li *ngFor="let ingr of pizza.ingredients">{{ingr}}, </li>
+                        </ul>
+                        <p>Cena: {{pizza.price}}</p>
+                    </div>
+                </label>
             </div>
         </div>
-    </div>
+        <div [ngClass]="{ 'conditionButton':  url }">
+            <button (click)="onSubmit()" type="submit" class="btn">Złóż zamówienie</button>
+        </div>
+    </form>
 </div>
